@@ -1,7 +1,37 @@
+"""
+157.55.39.189 - - [03/May/2022:20:00:00 -0400] TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 "GET /search?f%5B0%5D=%3A20&f%5B1%5D=%3A70&f%5B2%5D=crosscutting_concepts%3A1&f%5B3%5D=ngss_disciplinary_core_ideas%3A33&f%5B4%5D=supported_ngss_performance_expectations%3A203&node=235 HTTP/1.1" 200 10595 "-" "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+proposed object: 
+    { "157.55.39.189" : {
+        "address" : ip_address
+        "count" : num,
+        "first_hit" : datetime,
+        "last_hit" : datetime,
+        "status_codes" : [code1, code2, code3...],
+        "user_agents" : [agent1, agent2, agent3...],
+        }
+    }
+
+"""
+
 import sys
 import datetime
 
+class LoggedVisitor:
+    def __init__(self, address, timeStamp, statusCode, agent):
+        self.address = address
+        self.count = 1
+        self.firstHit = timeStamp
+        self.lastHit = timeStamp
+        self.status_codes = [statusCode]
+        self.user_agents = [agent]
+
 ipAddresses = {}
+
+def printIpAddressInfo(addressesObj):
+    for addr, info in addressesObj:
+        print(addr, ":")
+        for key, value in info:
+            print(key, ":  ", value)
 
 def getDateFromText(line):
     firstBracket = line.index("[")
@@ -63,14 +93,14 @@ def addLogLineObject(logLine):
 fileList = sys.argv[1:]
 
 # prep output file lines
-outputLines = ["*****    Output from log_testing.py    *****\n", "*****             --  2022, Stephen Graham    *****\n"]
+# outputLines = ["*****    Output from log_testing.py    *****\n", "*****             --  2022, Stephen Graham    *****\n"]
 
-now = datetime.datetime.now()
-outputLines.append("\nLast run on:  " + now.strftime("%b %d, %Y  %T:%M%p") + "\n")
-outputLines.append("\nFiles:\n")
-for file in fileList:
-    outputLines.append(f"\t{file}\n")
-outputLines.append("\n-----  Most Hits:  -----\n\n")
+# now = datetime.datetime.now()
+# outputLines.append("\nLast run on:  " + now.strftime("%b %d, %Y  %T:%M%p") + "\n")
+# outputLines.append("\nFiles:\n")
+# for file in fileList:
+#     outputLines.append(f"\t{file}\n")
+# outputLines.append("\n-----  Most Hits:  -----\n\n")
 
 ipAddresses = {}
 
@@ -100,7 +130,7 @@ for fileName in fileList:
     # print("ip address:  " + ip_address)
     # print("status code:  " + status_code)
     # print("user agent:  " + userAgent)
-    print(ipAddresses)
+    printIpAddressInfo(ipAddresses)
 
 # split_on_quotes[0] - ip address, client id, user id, [date], tls, ecdhe
 # split_on_quotes[1] - client request
