@@ -1,27 +1,31 @@
 """
 157.55.39.189 - - [03/May/2022:20:00:00 -0400] TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 "GET /search?f%5B0%5D=%3A20&f%5B1%5D=%3A70&f%5B2%5D=crosscutting_concepts%3A1&f%5B3%5D=ngss_disciplinary_core_ideas%3A33&f%5B4%5D=supported_ngss_performance_expectations%3A203&node=235 HTTP/1.1" 200 10595 "-" "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+IP address, user, group, timestamp, security protocol, cypher suite, request, status code, size of response, referrer, user agent
 proposed object: 
     { "157.55.39.189" : {
         "address" : ip_address
         "count" : num,
         "first_hit" : datetime,
         "last_hit" : datetime,
+        "security_protocols : [TLSv1.2, ...],
+        "cypher_suites" : [suite1, suite2]
         "status_codes" : [code1, code2, code3...],
         "user_agents" : [agent1, agent2, agent3...],
         }
     }
-
 """
 
 import sys
 import datetime
 
 class LoggedVisitor:
-    def __init__(self, address, timeStamp, statusCode, agent):
+    def __init__(self, address, timeStamp, securityProtocol, cypherSuite, statusCode, agent):
         self.address = address
         self.count = 1
-        self.firstHit = timeStamp
-        self.lastHit = timeStamp
+        self.first_hit = timeStamp
+        self.last_hit = timeStamp
+        self.security_protocols = [securityProtocol]
+        self.cypher_suites = [cypherSuite]
         self.status_codes = [statusCode]
         self.user_agents = [agent]
 
