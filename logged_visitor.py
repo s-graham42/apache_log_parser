@@ -9,6 +9,9 @@ class LoggedVisitor:
         self.status_codes = [statusCode]
         self.user_agents = [agent]
     
+    def __str__(self):
+        return (f'{self.address} - count: {self.count} - first_hit: {self.first_hit} - status codes: {self.status_codes}')
+
     def getAddress(self):
         return self.address
     

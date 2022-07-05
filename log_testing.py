@@ -17,17 +17,7 @@ proposed object:
 
 import sys
 import datetime
-
-class LoggedVisitor:
-    def __init__(self, address, timeStamp, securityProtocol, cypherSuite, statusCode, agent):
-        self.address = address
-        self.count = 1
-        self.first_hit = timeStamp
-        self.last_hit = timeStamp
-        self.security_protocols = [securityProtocol]
-        self.cypher_suites = [cypherSuite]
-        self.status_codes = [statusCode]
-        self.user_agents = [agent]
+import logged_visitor
 
 ipAddresses = {}
 
